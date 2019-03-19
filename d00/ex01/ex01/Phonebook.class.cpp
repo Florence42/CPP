@@ -6,7 +6,7 @@
 /*   By: frivaton <frivaton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 12:25:29 by frivaton          #+#    #+#             */
-/*   Updated: 2019/03/19 12:25:04 by frivaton         ###   ########.fr       */
+/*   Updated: 2019/03/19 12:44:08 by frivaton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ void    Phonebook::display( void ) const
         std::string nickname = this->_contacts[id].nickname;
         if (nickname.size() > 10)
             nickname = nickname.substr(0, 9) + ".";
-        std::cout << std::setw(10) << nickname << std::setfill(' ') << "|";
-
+        std::cout << std::setw(10) << nickname << std::setfill(' ') << std::endl;
     }
     std::cout << std::endl;
 }
