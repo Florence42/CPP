@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ZombieEvent.hpp                                    :+:      :+:    :+:   */
+/*   Weapon.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frivaton <frivaton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/19 14:20:47 by frivaton          #+#    #+#             */
-/*   Updated: 2019/03/20 15:26:21 by frivaton         ###   ########.fr       */
+/*   Created: 2019/03/20 16:23:43 by frivaton          #+#    #+#             */
+/*   Updated: 2019/03/20 16:50:03 by frivaton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ZOMBIEEVENT_HPP
-# define ZOMBIEEVENT_HPP
+#ifndef WEAPON_CLASS_H
+# define WEAPON_CLASS_H
 
-#include "Zombie.hpp"
+# include <string>
 
-class ZombieEvent
+class Weapon
 {
-public:
-	ZombieEvent(void);
-	~ZombieEvent(void);
-	void setZombieType(std::string type);
-	Zombie* newZombie( std::string name );
-	void randomChump(void);
+	public:
+		Weapon(std::string type);
+		~Weapon(void);
 
-private:
-	std::string	_type;
-	std::string	_name;
-	static std::string _names[5];
-	
-		
+		const std::string getType(void) const;
+		void setType(std::string type);
+
+	private:
+		std::string _type;
 };
 
 #endif 
-

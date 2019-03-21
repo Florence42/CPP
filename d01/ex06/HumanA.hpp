@@ -1,36 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ZombieEvent.hpp                                    :+:      :+:    :+:   */
+/*   HumanA.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frivaton <frivaton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/19 14:20:47 by frivaton          #+#    #+#             */
-/*   Updated: 2019/03/20 15:26:21 by frivaton         ###   ########.fr       */
+/*   Created: 2019/03/20 16:24:15 by frivaton          #+#    #+#             */
+/*   Updated: 2019/03/20 16:50:25 by frivaton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ZOMBIEEVENT_HPP
-# define ZOMBIEEVENT_HPP
+#ifndef HUMANA_CLASS_H
+# define HUMANA_CLASS_H
 
-#include "Zombie.hpp"
+# include <string>
 
-class ZombieEvent
+# include "Weapon.hpp"
+
+class HumanA
 {
-public:
-	ZombieEvent(void);
-	~ZombieEvent(void);
-	void setZombieType(std::string type);
-	Zombie* newZombie( std::string name );
-	void randomChump(void);
+	public:
+		HumanA(std::string name, Weapon &w);
+		~HumanA(void);
 
-private:
-	std::string	_type;
-	std::string	_name;
-	static std::string _names[5];
-	
-		
+		void	attack(void) const;
+
+	private:
+		std::string _name;
+		Weapon &_weapon;
 };
 
-#endif 
-
+#endif

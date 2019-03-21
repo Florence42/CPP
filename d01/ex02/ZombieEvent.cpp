@@ -6,7 +6,7 @@
 /*   By: frivaton <frivaton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 14:20:31 by frivaton          #+#    #+#             */
-/*   Updated: 2019/03/19 16:43:40 by frivaton         ###   ########.fr       */
+/*   Updated: 2019/03/19 17:29:23 by frivaton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ std::string ZombieEvent::_names[5] = {
 	"Georges",
 	"Marc",
 	"Lucille",
-	"Franc"
+	"Franck"
 };
 
 void ZombieEvent::setZombieType(std::string type)

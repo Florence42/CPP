@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ZombieEvent.hpp                                    :+:      :+:    :+:   */
+/*   Human.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frivaton <frivaton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/19 14:20:47 by frivaton          #+#    #+#             */
-/*   Updated: 2019/03/20 15:26:21 by frivaton         ###   ########.fr       */
+/*   Created: 2019/03/20 16:02:46 by frivaton          #+#    #+#             */
+/*   Updated: 2019/03/20 16:08:08 by frivaton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ZOMBIEEVENT_HPP
-# define ZOMBIEEVENT_HPP
+#ifndef HUMAN_CLASS_H
+# define HUMAN_CLASS_H
 
-#include "Zombie.hpp"
+# include "Brain.hpp"
 
-class ZombieEvent
+class Human
 {
-public:
-	ZombieEvent(void);
-	~ZombieEvent(void);
-	void setZombieType(std::string type);
-	Zombie* newZombie( std::string name );
-	void randomChump(void);
+	public:
+		Human(void);
+		~Human(void);
 
-private:
-	std::string	_type;
-	std::string	_name;
-	static std::string _names[5];
-	
-		
+		const Brain &getBrain() const;
+		std::string identify() const;
+
+	private:
+		const Brain _brain;
 };
 
 #endif 

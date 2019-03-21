@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ZombieEvent.hpp                                    :+:      :+:    :+:   */
+/*   ZombieHorde.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frivaton <frivaton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 14:20:47 by frivaton          #+#    #+#             */
-/*   Updated: 2019/03/20 15:26:21 by frivaton         ###   ########.fr       */
+/*   Updated: 2019/03/20 15:31:43 by frivaton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ZOMBIEEVENT_HPP
-# define ZOMBIEEVENT_HPP
+#ifndef ZOMBIEHORDE_HPP
+# define ZOMBIEHORDE_HPP
 
 #include "Zombie.hpp"
 
-class ZombieEvent
+#define TYPE_COUNT 4
+#define NAME_COUNT 5
+
+
+class ZombieHorde
 {
 public:
-	ZombieEvent(void);
-	~ZombieEvent(void);
-	void setZombieType(std::string type);
-	Zombie* newZombie( std::string name );
-	void randomChump(void);
+	ZombieHorde(int n);
+	~ZombieHorde(void);
+
+	void	announce(void);
 
 private:
-	std::string	_type;
-	std::string	_name;
-	static std::string _names[5];
+		int					_count;
+		Zombie				*_zombies;
+		static std::string	_types[TYPE_COUNT];
+		static std::string	_names[NAME_COUNT];
 	
 		
 };
