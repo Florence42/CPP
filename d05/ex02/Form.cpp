@@ -44,13 +44,25 @@ Form&		Form::operator=(Form const & rhs)
 }
 
 
-void Form::beSigned(Bureaucrat const &b) 
+void Form::beSigned(Bureaucrat const &b)
 {
 	if (b.getGrade() > this->_GradetoSign)
 		throw Form::GradeTooLowException();
 
 	this->_signed = true;
 }
+
+void Form::execute(Bureaucrat const &b) 
+{
+	if (!this->_signed)
+		throw NotSignedException();
+
+	if (b.getGrade() > this->_GradeToExec)
+		throw Form::GradeTooLowException();
+
+	this->beExecuted();
+}
+void						Form::beExecuted(void) {}
 
 std::string	const			&Form::getName(void) const { return (this->_name); }
 bool            			Form::getSigned(void) const { return (this->_signed); }
@@ -122,8 +134,33 @@ const char * Form::GradeTooLowException::what() const throw()
     return ("Grade is too low !");
 }
 
+/////////
+Form::NotSignedException::NotSignedException( void )
+{
+    return ;
+}
 
+Form::NotSignedException::NotSignedException( NotSignedException const & e ) 
+{
+    *this = e;
+    return ;
+}
 
+Form::NotSignedException::~NotSignedException( void ) throw()
+{
+    return ;
+}
+
+Form::NotSignedException & Form::NotSignedException::operator = ( Form::NotSignedException const & rhs )
+{
+    std::exception::operator=(rhs);
+    return *this;
+}
+
+const char * Form::NotSignedException::what() const throw() 
+{
+    return ("Form is not signed !");
+}
 
 
 
