@@ -6,7 +6,7 @@
 /*   By: frivaton <frivaton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 19:25:37 by frivaton          #+#    #+#             */
-/*   Updated: 2019/03/30 12:49:25 by frivaton         ###   ########.fr       */
+/*   Updated: 2019/03/30 13:09:30 by frivaton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,43 +19,15 @@
 int				main(void)
 {
 	
-	std::cout <<std::endl;
-    std::cout << "try decremente 150" << std::endl;
-    try {
-            
-        Bureaucrat Mini("Mini", 150);
-		std::cout << Mini << std::endl;
-		Mini.decrementGrade();
-
-    }
-    catch (std::exception &e ) 
-	{
-        std::cout << e.what() << std::endl;
-    }
-
-    std::cout << std::endl;
-	std::cout << "try decremente RegGuy" << std::endl;
-    try {
-            
-        Bureaucrat Reg("Regular guy", 70);
-		std::cout << Reg << std::endl;
-		Reg.decrementGrade();
-		std::cout << Reg << std::endl;		
-    }
-    catch (std::exception &e)
-	{
-        std::cout << e.what() << std::endl;
-    }	
-	
 	Form		form("Form 42C", 21, 21);
-	std::cout << form;
+	std::cout << form << std::endl;
 
 	try
 	{
 		Bureaucrat	bob("Bob", 42);
-		std::cout << bob;
+		std::cout << bob << std::endl;
 		bob.signForm(form);
-		std::cout << form;
+		std::cout << form << std::endl;
 	}
 	catch (std::exception &e)
 	{
@@ -65,14 +37,14 @@ int				main(void)
 
 	try
 	{
-		Bureaucrat	jule("Jule", 2);
-		std::cout << jule;
+		Bureaucrat	jule("Julie", 2);
+		std::cout << jule << std::endl;
 		jule.signForm(form);
-		std::cout << form;
+		std::cout << form << std::endl;
 	}
 	catch (std::exception &e)
 	{
-		std::cout << "ERROR Jule" << std::endl;
+		std::cout << "ERROR Julie" << std::endl;
 		std::cout << e.what() << std::endl;
 	}
 

@@ -92,7 +92,7 @@ Form::GradeTooHighException & Form::GradeTooHighException::operator = ( Form::Gr
 
 const char * Form::GradeTooHighException::what() const throw() 
 {
-    return ( "Cannot increment grade, Form too high !");
+    return ( "Grade is too high !");
 }
 
 Form::GradeTooLowException::GradeTooLowException( void )
@@ -119,7 +119,7 @@ Form::GradeTooLowException & Form::GradeTooLowException::operator = ( Form::Grad
 
 const char * Form::GradeTooLowException::what() const throw() 
 {
-    return ("Cannot decrement grade, Form too low !");
+    return ("Grade is too low !");
 }
 
 
