@@ -3,130 +3,154 @@
 /*                                                        :::      ::::::::   */
 /*   OfficeBlock.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivaton <frivaton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: frivaton <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/30 16:37:18 by frivaton          #+#    #+#             */
-/*   Updated: 2019/03/30 17:25:45 by frivaton         ###   ########.fr       */
+/*   Created: 2019/03/31 10:24:17 by frivaton          #+#    #+#             */
+/*   Updated: 2019/03/31 10:24:21 by frivaton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include <string>
 #include "OfficeBlock.hpp"
-#include "Form.hpp"
-#include "ShrubberyCreationForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "PresidentialPardonForm.hpp"
+#include "Intern.hpp"
+#include "Bureaucrat.hpp"
 
 OfficeBlock::OfficeBlock(void)
 {}
 
-OfficeBlock::OfficeBlock(OfficeBlock const &src)
+OfficeBlock::OfficeBlock(Intern &intern, Bureaucrat &signer, Bureaucrat &executor)
 {
-	*this = src;
+	this->_intern = &intern;
+	this->_signer = &signer;
+	this->_executor = &executor;
 }
 
 OfficeBlock::~OfficeBlock(void)
 {}
 
-OfficeBlock				&OfficeBlock::operator=(OfficeBlock const &rhs)
+void						OfficeBlock::doBureaucracy(std::string const &name, std::string const &target)
 {
-	(void)rhs;
+	Form					*form;
+
+	if (!this->_intern)
+		throw (NoInternException());
+	if (!this->_signer)
+		throw (NoSignerException());
+	if (!this->_executor)
+		throw (NoExecutorException());
+
+	form = this->_intern->makeForm(name, target);
+
+	try
+	{
+		this->_signer->signForm(*form);
+	}
+	catch (Form::GradeTooLowException &e)
+	{
+		throw (SignerGradeTooLowException());
+	}
+
+	try
+	{
+		this->_executor->executeForm(*form);
+	}
+	catch (Form::GradeTooLowException &e)
+	{
+		throw (ExecutorGradeTooLowException());
+	}
+}
+
+void						OfficeBlock::setIntern(Intern &intern) { this->_intern = &intern; }
+void						OfficeBlock::setSigner(Bureaucrat &signer) { this->_signer = &signer; }
+void						OfficeBlock::setExecutor(Bureaucrat &executor) { this->_executor = &executor; }
+
+							OfficeBlock::NoInternException::NoInternException(void) {}
+							OfficeBlock::NoInternException::~NoInternException(void) throw() {}
+							OfficeBlock::NoInternException::NoInternException(NoInternException const &src)
+{
+	*this = src;
+}
+
+OfficeBlock::NoInternException	&OfficeBlock::NoInternException::operator=(OfficeBlock::NoInternException const &rhs)
+{
+	std::exception::operator=(rhs);
 	return (*this);
 }
 
-void OfficeBlock::setIntern( Intern const &intern )
+char const					*OfficeBlock::NoInternException::what(void) const throw()
 {
-	*_intern = intern;
+	return ("No Intern");
 }
 
-void OfficeBlock::setSigner( Bureaucrat const & signer )
+							OfficeBlock::NoSignerException::NoSignerException(void) {}
+							OfficeBlock::NoSignerException::~NoSignerException(void) throw() {}
+							OfficeBlock::NoSignerException::NoSignerException(NoSignerException const &src)
 {
-	*_signer = signer;
+	*this = src;
 }
 
-void OfficeBlock::setExecutor( Bureaucrat const & executor )
+OfficeBlock::NoSignerException	&OfficeBlock::NoSignerException::operator=(OfficeBlock::NoSignerException const &rhs)
 {
-	*_executor = executor;
+	std::exception::operator=(rhs);
+	return (*this);
 }
 
-
-Form				*OfficeBlock::makeForm(std::string const &name, std::string const &target)
+char const					*OfficeBlock::NoSignerException::what(void) const throw()
 {
-	Form			*form;
-
-	if (name == "shrubbery creation")
-		form = (Form *)new ShrubberyCreationForm(target);
-	else if (name == "robotomy request")
-		form = (Form *)new RobotomyRequestForm(target);
-	else if (name == "presidential pardon")
-		form = (Form *)new PresidentialPardonForm(target);
-	else
-	{
-		std::cout << "OfficeBlock can't find the " << name << " form !" << std::endl;
-		return (NULL);
-	}
-	std::cout << "OfficeBlock creates " << *form;
-	return (form);
+	return ("No Signer");
 }
 
-typedef OfficeBlock::NoInternException NoInternException;
-
-NoInternException::NoInternException(void) {}
-
-NoInternException::NoInternException(NoInternException const &) {}
-
-NoInternException::~NoInternException(void) throw() {}
-
-NoInternException &NoInternException::operator=(
-		NoInternException const &
-	)
+							OfficeBlock::NoExecutorException::NoExecutorException(void) {}
+							OfficeBlock::NoExecutorException::~NoExecutorException(void) throw() {}
+							OfficeBlock::NoExecutorException::NoExecutorException(NoExecutorException const &src)
 {
-	return *this;
+	*this = src;
 }
 
-const char *NoInternException::what(void) const throw()
+OfficeBlock::NoExecutorException	&OfficeBlock::NoExecutorException::operator=(OfficeBlock::NoExecutorException const &rhs)
 {
-	return "No intern";
+	std::exception::operator=(rhs);
+	return (*this);
 }
 
-typedef OfficeBlock::NoSignerException NoSignerException;
-
-NoSignerException::NoSignerException(void) {}
-
-NoSignerException::NoSignerException(NoSignerException const &) {}
-
-NoSignerException::~NoSignerException(void) throw() {}
-
-NoSignerException &NoSignerException::operator=(
-		NoSignerException const &
-	)
+char const					*OfficeBlock::NoExecutorException::what(void) const throw()
 {
-	return *this;
+	return ("No Executor");
 }
 
-const char *NoSignerException::what(void) const throw()
+							OfficeBlock::SignerGradeTooLowException::SignerGradeTooLowException(void) {}
+							OfficeBlock::SignerGradeTooLowException::~SignerGradeTooLowException(void) throw() {}
+							OfficeBlock::SignerGradeTooLowException::SignerGradeTooLowException(SignerGradeTooLowException const &src)
 {
-	return "No signer";
+	*this = src;
 }
 
-typedef OfficeBlock::NoExecutorException NoExecutorException;
-
-NoExecutorException::NoExecutorException(void) {}
-
-NoExecutorException::NoExecutorException(NoExecutorException const &) {}
-
-NoExecutorException::~NoExecutorException(void) throw() {}
-
-NoExecutorException &NoExecutorException::operator=(
-		NoExecutorException const &
-	)
+OfficeBlock::SignerGradeTooLowException	&OfficeBlock::SignerGradeTooLowException::operator=(OfficeBlock::SignerGradeTooLowException const &rhs)
 {
-	return *this;
+	std::exception::operator=(rhs);
+	return (*this);
 }
 
-const char *NoExecutorException::what(void) const throw()
+char const					*OfficeBlock::SignerGradeTooLowException::what(void) const throw()
 {
-	return "No executor";
+	return ("Signer Grade Too Low");
 }
 
+							OfficeBlock::ExecutorGradeTooLowException::ExecutorGradeTooLowException(void) {}
+							OfficeBlock::ExecutorGradeTooLowException::~ExecutorGradeTooLowException(void) throw() {}
+							OfficeBlock::ExecutorGradeTooLowException::ExecutorGradeTooLowException(ExecutorGradeTooLowException const &src)
+{
+	*this = src;
+}
 
+OfficeBlock::ExecutorGradeTooLowException	&OfficeBlock::ExecutorGradeTooLowException::operator=(OfficeBlock::ExecutorGradeTooLowException const &rhs)
+{
+	std::exception::operator=(rhs);
+	return (*this);
+}
+
+char const					*OfficeBlock::ExecutorGradeTooLowException::what(void) const throw()
+{
+	return ("Executor Grade Too Low");
+}

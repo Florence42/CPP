@@ -3,79 +3,88 @@
 /*                                                        :::      ::::::::   */
 /*   OfficeBlock.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivaton <frivaton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: frivaton <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/30 16:36:58 by frivaton          #+#    #+#             */
-/*   Updated: 2019/03/30 17:22:47 by frivaton         ###   ########.fr       */
+/*   Created: 2019/03/31 10:24:01 by frivaton          #+#    #+#             */
+/*   Updated: 2019/03/31 10:24:05 by frivaton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OFFICEBLOCK_CLASS_H
-# define OFFICEBLOCK_CLASS_H
+
+#ifndef OFFICEBLOCK_H
+# define OFFICEBLOCK_H
 
 # include <string>
-# include "OfficeBlock.hpp"
-# include "Form.hpp"
-# include "Bureaucrat.hpp"
 # include "Intern.hpp"
+# include "Bureaucrat.hpp"
 
 class OfficeBlock
 {
+	private:
+		Intern					*_intern;
+		Bureaucrat				*_signer;
+		Bureaucrat				*_executor;
+
 	public:
+		class					NoInternException: public std::exception
+		{
+			public:
+									NoInternException(void);
+									~NoInternException(void) throw();
+									NoInternException(NoInternException const &src);
+			NoInternException		&operator=(NoInternException const &rhs);
+			char const				*what(void) const throw();
+		};
+
+		class					NoSignerException: public std::exception
+		{
+			public:
+									NoSignerException(void);
+									~NoSignerException(void) throw();
+									NoSignerException(NoSignerException const &src);
+			NoSignerException		&operator=(NoSignerException const &rhs);
+			char const				*what(void) const throw();
+		};
+
+		class					NoExecutorException: public std::exception
+		{
+			public:
+									NoExecutorException(void);
+									~NoExecutorException(void) throw();
+									NoExecutorException(NoExecutorException const &src);
+			NoExecutorException		&operator=(NoExecutorException const &rhs);
+			char const				*what(void) const throw();
+		};
+
+		class					SignerGradeTooLowException: public std::exception
+		{
+			public:
+									SignerGradeTooLowException(void);
+									~SignerGradeTooLowException(void) throw();
+									SignerGradeTooLowException(SignerGradeTooLowException const &src);
+			SignerGradeTooLowException		&operator=(SignerGradeTooLowException const &rhs);
+			char const				*what(void) const throw();
+		};
+
+		class					ExecutorGradeTooLowException: public std::exception
+		{
+			public:
+									ExecutorGradeTooLowException(void);
+									~ExecutorGradeTooLowException(void) throw();
+									ExecutorGradeTooLowException(ExecutorGradeTooLowException const &src);
+			ExecutorGradeTooLowException		&operator=(ExecutorGradeTooLowException const &rhs);
+			char const				*what(void) const throw();
+		};
+
 								OfficeBlock(void);
 								~OfficeBlock(void);
-								OfficeBlock(OfficeBlock const &src);
-		OfficeBlock				&operator=(OfficeBlock const &rhs);
+								OfficeBlock(Intern &intern, Bureaucrat &signer, Bureaucrat &executor);
 
 		void					doBureaucracy(std::string const &name, std::string const &target);
 
-		void					setIntern(Intern const & intern);
-		void					setSigner(Bureaucrat const & signer);
-		void					setExecutor(Bureaucrat const & executor);
-
-		Form					*makeForm(std::string const &name, std::string const &target);
-
-		class NoInternException : public std::exception {
-			public:
-				NoInternException(void);
-				NoInternException(NoInternException const &obj);
-				~NoInternException(void) throw();
-
-				NoInternException &operator=(NoInternException const &rhs);
-
-				const char *what(void) const throw();
-		};
-
-		class NoExecutorException : public std::exception {
-			public:
-				NoExecutorException(void);
-				NoExecutorException(NoExecutorException const &obj);
-				~NoExecutorException(void) throw();
-
-				NoExecutorException &operator=(NoExecutorException const &rhs);
-
-				const char *what(void) const throw();
-		};
-
-		class NoSignerException : public std::exception {
-			public:
-				NoSignerException(void);
-				NoSignerException(NoSignerException const &obj);
-				~NoSignerException(void) throw();
-
-				NoSignerException &operator=(NoSignerException const &rhs);
-
-				const char *what(void) const throw();
-		};
-
-
-	private :
-	    Intern                  *_intern;
-		Bureaucrat				*_signer;
-		Bureaucrat				*_executor;
-		
-
+		void					setIntern(Intern &intern);
+		void					setSigner(Bureaucrat &signer);
+		void					setExecutor(Bureaucrat &executor);
 };
 
 #endif
-
