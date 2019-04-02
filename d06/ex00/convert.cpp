@@ -6,15 +6,19 @@
 /*   By: frivaton <frivaton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 12:44:03 by frivaton          #+#    #+#             */
-/*   Updated: 2019/03/31 17:43:38 by frivaton         ###   ########.fr       */
+/*   Updated: 2019/04/02 12:11:38 by frivaton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 #include <sstream>
+#include <string>
+#include <cctype>
+#include <climits>
 #include <cfloat>
 #include <cmath>
+#include <math.h>
 
 int main(int argc, char **argv)
 {
@@ -34,6 +38,7 @@ int main(int argc, char **argv)
 	else // parameter is number
 	{
 		double	number;
+		
 		//we take off the f at the end, 12.23f becomes 12.23
 		if (input.size() > 1 && input.back() == 'f' && input[input.size() - 2] != 'n' )
 			input.resize(input.size() - 1);
@@ -52,8 +57,10 @@ int main(int argc, char **argv)
 			std::cout << "double: impossible" << std::endl;
 			return (0);
 		}
-
+		
 		//std::cout << "number = " << number << std::endl;
+		//std::cout << "max : " << FLT_MAX  << "  min : " << FLT_MIN << std::endl;
+		//std::cout << "max : " << DBL_MAX  << "  min : " << DBL_MIN << std::endl;
 		
 		//char
 		std::cout << "char: ";
@@ -68,22 +75,28 @@ int main(int argc, char **argv)
 		// nan != nan  nan < INT_MAX nan > INT_MIN; but inf == inf
 		std::cout << "int: ";
 		if (number > INT_MAX || number < INT_MIN  || number != number )
-			std::cout << "impossible" << std::endl;
+			std::cout << " impossible" << std::endl;
 		else
-			std::cout << static_cast<int>(number) << std::endl;
+		{
+			std::cout << static_cast<int>(number) << std::endl;	
+		}
+			
 
 		//float
 		std::cout << "float: ";
-		if ((number != 0) && (number > FLT_MAX || number < FLT_MIN) && number == number && !std::isinf(number))
-			std::cout << "impossible" << std::endl;
+		if ((number != 0) && (number > FLT_MAX || number < -FLT_MAX) && number == number && !std::isinf(number))
+			std::cout << " impossible" << std::endl;
 		else
 			std::cout << std::fixed << std::setprecision(1) << static_cast<float>(number) << "f" << std::endl;
-
+	
 		//double
 		std::cout << "double: ";
-		if ((number != 0) && (number > DBL_MAX || number < DBL_MIN) && number == number && !std::isinf(number))
-			std::cout << "impossible" << std::endl;
+		//std::cout <<  std::fixed << std::setprecision(1) << number << std::endl;		
+		if ((number != 0) && (number > DBL_MAX || number < -DBL_MAX) && number == number && !std::isinf(number))
+			std::cout << " impossible" << std::endl;
 		else
+		{
 			std::cout <<  std::fixed << std::setprecision(1) << number << std::endl;
+		}			
 	}
 }
